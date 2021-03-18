@@ -35,7 +35,7 @@
       <div>
         <label for="meta-box-text">Topic Name</label>
         <!-- value of the input is fetched using get_post_meta -->
-        <input name="meta-box-text" type="text" value="<?php echo get_post_meta($object->ID, "_meta-box-text", true); ?>">
+        <input name="meta-box-text" type="text" value="<?php echo esc_html(get_post_meta($object->ID, "_meta-box-text", true)); ?>">
         <br>
         <!-- For check box -->
         <?php
@@ -68,7 +68,7 @@
       // To check the user have the capability to edit
       if(!current_user_can("edit_post", $post_id))
         return $post_id;
-      // aborting the logic that is to follow beneath the conditiona, if doing autosave = true
+      // aborting the logic that is to follow beneath the condition, if doing autosave = true
       if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
         return $post_id;
       $meta_box_text_value = "";
@@ -91,6 +91,7 @@
     // Function for displaying Fields in front end
     function display_front_end($val){
       global $post;
+      $test="";
       //write_log('df');
       // Retrieves a post meta field for the given post ID.
       $checkbox_val = get_post_meta($post->ID, "_meta-box-checkbox", true);
@@ -107,16 +108,5 @@
   }
   // creating an instance of class
   new Custom_meta();
-  // For debugging purpose
-  if (!function_exists('write_log')) {
-  	function write_log ( $log )  {
-  		if ( true === WP_DEBUG ) {
-  			if ( is_array( $log ) || is_object( $log ) ) {
-  				error_log( print_r( $log, true ) );
-  			} else {
-  				error_log( $log );
-  			}
-  		}
-  	}
-  }
+  
 ?>
